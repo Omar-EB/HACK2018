@@ -7,26 +7,45 @@ reddit = praw.Reddit(client_id='ehpCFcRL2vQVOA',
                      password='hackslol',
                      user_agent='uottawahacks')
 
-subreddit = reddit.subreddit('music')
+subreddit = reddit.subreddit('earthporn')
 
-for submission in subreddit.hot(limit=5000000):
-    if(submission.stickied):
-        print(submission.link_flair_text)
-        if submission.link_flair_text == 'music streaming':
-            print(submission.title)
-            print('\n')
+#for submission in subreddit.hot(limit=5):
+    #if submission.link_flair_text == 'music streaming':
+        #print(submission.title)
+        #print('\n')
+    #print(submission.url)
 
-
-
-
-def find_by_genre(genrename):
     
+
+
+
+def find_by_type(type):
+    submissions = []
+    if type=='nature':
+        subreddit = reddit.subreddit('earthporn')
+    elif type=='cities':
+        subreddit = reddit.subreddit('cityporn')
+    elif type=='countryside':
+        subreddit = reddit.subreddit('villageporn')
+    elif type=='people':
+        subreddit = reddit.subreddit('humanporn')
+    elif type=='art':
+        subreddit = reddit.subreddit('artporn')
+    elif type=='cars':
+        subreddit = reddit.subreddit('carporn')
+    else :
+        subreddit = reddit.subreddit('lakeporn')
+    for submission in subreddit.hot(limit=5):
+        submissions.append(submission)
+    return submissions
     end
+
+
     
-
-
-
-
+def main(type):
+    submissions = find_by_type(type)
+    for submission in submissions:
+        print(submission.url)    
 
 
 
