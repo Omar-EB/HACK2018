@@ -9,7 +9,7 @@ public class tester{
         try {
             
             //YO THE TYPE CAN BE CHANGED FOR NOW IM JUST HARDCODING NATURE
-            String type = null
+            String type = null;
 
             Process p = Runtime.getRuntime().exec("python test.py nature");
             
