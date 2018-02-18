@@ -20,7 +20,7 @@ public class Tester{
 				System.out.println("Result " + i + ":" + results.get(i));
 			}
 
-			SQLManager.deleteSavedLink("Test1", "www.test2.com");
+			//SQLManager.deleteSavedLink("Test1", "www.test2.com");
 
 			results = SQLManager.findSavedLinks("Test2");
 			System.out.println("Count: " + results.size());

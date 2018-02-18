@@ -133,6 +133,7 @@ public class Menu extends JFrame {
 		
 		JPanel savedPanel = new JPanel();
 		JScrollPane saved2 = new JScrollPane(savedPanel);
+		saved2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		savedPanel.setLayout(new GridLayout(0,2));
 		
 		JLabel lblNewLabel = new JLabel("New label");
@@ -149,7 +150,27 @@ public class Menu extends JFrame {
 		
 		JLabel lblNewLabel_4 = new JLabel("New label");
 		savedPanel.add(lblNewLabel_4);
+		
+		JLabel lblNewLabel_5 = new JLabel("New label");
+		savedPanel.add(lblNewLabel_5);
+		JLabel lblNewLabel_6 = new JLabel("New label");
+		savedPanel.add(lblNewLabel_6);
+		JLabel lblNewLabel_7 = new JLabel("New label");
+		savedPanel.add(lblNewLabel_7);
+		JLabel lblNewLabel_8 = new JLabel("New label");
+		savedPanel.add(lblNewLabel_8);
+		
+		JLabel lblNewLabel_9 = new JLabel("New label");
+		savedPanel.add(lblNewLabel_9);
+		JLabel lblNewLabel_10 = new JLabel("New label");
+		savedPanel.add(lblNewLabel_10);
+		JLabel lblNewLabel_11 = new JLabel("New label");
+		savedPanel.add(lblNewLabel_11);
+		JLabel lblNewLabel_12 = new JLabel("New label");
+		savedPanel.add(lblNewLabel_12);
 		saved2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		saved2.setWheelScrollingEnabled(true);
+
 		tabbedPane.addTab("Saved2", null, saved2, "Photos you saved");
 		
 		
