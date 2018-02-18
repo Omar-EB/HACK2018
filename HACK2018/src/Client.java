@@ -18,7 +18,7 @@ public class Client implements ActionListener {
 	JPanel jp;
 	public Client (String host,String name ) {
 		try{
-			int serverPort = 7896;
+			int serverPort = 6432;
 			System.out.println("starting a new client socket");
 			s = new Socket(InetAddress.getByName(host), serverPort);
 			out =new ObjectOutputStream(s.getOutputStream());
@@ -63,7 +63,7 @@ public class Client implements ActionListener {
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		}catch (EOFException e){System.out.println("EOF:"+e.getMessage());
+		}catch (EOFException e){System.out.println("End Of File:"+e.getMessage());
 		}catch (IOException e){System.out.println("readline IO:"+e.getMessage());}
 	}
 }

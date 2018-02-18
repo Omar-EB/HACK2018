@@ -3,13 +3,12 @@ import java.io.*;
 import java.util.*;
 
 public class Server {
-	private static int serverPort = 7896;
+	private static int serverPort = 6432;
 	private static List <Connection> all_connections= new ArrayList<Connection>();
 	
 	public static void main (String args[]) {
 	   	try {
 	        InetAddress addr = InetAddress.getLocalHost();
-	        byte[] ipAddr = addr.getAddress();
 	        String hostname = addr.getHostName();
 	        System.out.println("Server Name: " + hostname + "\nServer Port: " + serverPort);
 	    } catch (UnknownHostException e) {
@@ -33,42 +32,6 @@ public class Server {
 					System.out.println("----------------");
 				} catch (SocketTimeoutException ex ) {
 					System.out.println("Time out exception");
-					/*
-					for (Connection c : all_connections) {
-						Object ob;
-						try {
-							ob = c.in.readObject(); //problematic
-							if (ob!=null) {
-								ClientMessage cm = (ClientMessage) ob;
-								System.out.println("We're here");
-								switch(cm.getType()) {
-								case REGISTER: System.out.println("Reg"); // write to the output stream
-								break;
-								case SEARCH: System.out.println("Search"); // write to the output stream
-									break;
-								case SHARE: 
-									System.out.println("got back here"); // write to the output stream
-									break; 
-								case SAVE: System.out.println("save"); // write to the output stream
-									break;	
-								}
-							} /*
-							System.out.println("We're here");
-							switch(cm.getType()) {
-							case REGISTER: System.out.println("Reg"); // write to the output stream
-							break;
-							case SEARCH: System.out.println("Search"); // write to the output stream
-								break;
-							case SHARE: 
-								System.out.println("got back here"); // write to the output stream
-								break; 
-							case SAVE: System.out.println("save"); // write to the output stream
-								break;	
-							} 
-						} catch (ClassNotFoundException xptn) {
-							xptn.printStackTrace();
-						}
-					} */
 				}
 			}
 		} catch(IOException e) { System.out.println("IOException Listen socket:"+e.getMessage());}
@@ -94,25 +57,25 @@ class Connection extends Thread {
 		System.out.println("server thread started");
 		while(true) {
 			try {
-				ClientMessage mg = (ClientMessage) in.readObject();
-				switch(mg.getType()) {
-					case REGISTER: System.out.println("Reg"); // write to the output stream
-					break;
-					case SEARCH: System.out.println("Search"); // write to the output stream
+					ClientMessage mg = (ClientMessage) in.readObject();
+					switch(mg.getType()) {
+						case REGISTER: System.out.println("Reg"); // write to the output stream
 						break;
-					case SHARE: 
-						for (Connection c : all_connections ) {
-							c.out.writeObject(new ServerMessage(ServerMessage.ROUTE.SHARE_RESPONSE));
-							System.out.println("got back");
-						};
-						break; 
-					case SAVE: System.out.println("save"); // write to the output stream
-						break;	
-				}
-				
-				} catch (EOFException e){System.out.println("EOF:"+e.getMessage());
-				} catch(IOException e) {System.out.println("readline1:"+e.getMessage());
-				} catch(ClassNotFoundException e) {System.out.println("readline2:"+e.getMessage());}
+						case SEARCH: System.out.println("Search"); // write to the output stream
+							break;
+						case SHARE: 
+							for (Connection c : all_connections ) {
+								c.out.writeObject(new ServerMessage(ServerMessage.ROUTE.SHARE_RESPONSE));
+								System.out.println("got back");
+							};
+							break; 
+						case SAVE: System.out.println("save"); // write to the output stream
+							break;	
+					}
+					
+				} catch (EOFException e){System.out.println("EOF message:"+e.getMessage());
+				} catch(ClassNotFoundException e) {System.out.println("ClsNtFnd message:"+e.getMessage());
+				} catch(IOException e) {System.out.println("IO message:"+e.getMessage());}
 	} 
 	}
 }
