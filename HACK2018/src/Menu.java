@@ -60,7 +60,7 @@ public class Menu extends JFrame {
 		contentPane.add(tabbedPane);
 		
 		JPanel search = new JPanel();
-		search.setBackground(Color.LIGHT_GRAY);
+		search.setBackground(Color.decode("#B2EBF2"));
 		tabbedPane.addTab("Search", null, search, "To search for photos");
 		search.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
@@ -71,48 +71,23 @@ public class Menu extends JFrame {
 		search.add(rdbtnNature);
 		
 		JPanel savedPanel = new JPanel();
-		JScrollPane saved2 = new JScrollPane(savedPanel);
-		saved2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		savedPanel.setBackground(Color.decode("#B2EBF2"));
+		JScrollPane saved = new JScrollPane(savedPanel);
+		saved.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		savedPanel.setLayout(new GridLayout(0,2));
+		saved.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		saved.setWheelScrollingEnabled(true);
 		
-		JLabel lblNewLabel = new JLabel("New label");
-		savedPanel.add(lblNewLabel);
-		
-		JLabel lblNewLabel_1 = new JLabel("New label");
-		savedPanel.add(lblNewLabel_1);
-		
-		JLabel lblNewLabel_2 = new JLabel("New label");
-		savedPanel.add(lblNewLabel_2);
-		
-		JLabel lblNewLabel_3 = new JLabel("New label");
-		savedPanel.add(lblNewLabel_3);
-		
-		JLabel lblNewLabel_4 = new JLabel("New label");
-		savedPanel.add(lblNewLabel_4);
-		
-		JLabel lblNewLabel_5 = new JLabel("New label");
-		savedPanel.add(lblNewLabel_5);
-		JLabel lblNewLabel_6 = new JLabel("New label");
-		savedPanel.add(lblNewLabel_6);
-		JLabel lblNewLabel_7 = new JLabel("New label");
-		savedPanel.add(lblNewLabel_7);
-		JLabel lblNewLabel_8 = new JLabel("New label");
-		savedPanel.add(lblNewLabel_8);
-		
-		JLabel lblNewLabel_9 = new JLabel("New label");
-		savedPanel.add(lblNewLabel_9);
-		JLabel lblNewLabel_10 = new JLabel("New label");
-		savedPanel.add(lblNewLabel_10);
-		JLabel lblNewLabel_11 = new JLabel("New label");
-		savedPanel.add(lblNewLabel_11);
-		JLabel lblNewLabel_12 = new JLabel("New label");
-		savedPanel.add(lblNewLabel_12);
-		saved2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-		saved2.setWheelScrollingEnabled(true);
-		
-				tabbedPane.addTab("Saved2", null, saved2, "Photos you saved");
+				tabbedPane.addTab("Saved", null, saved, "Photos you saved");
 		JPanel share = new JPanel();
 		tabbedPane.addTab("Friend's Shared", null, share, "Photos shared to you");
+		
+		JPanel sharedPanel = new JPanel();
+		sharedPanel.setBackground(Color.decode("#B2EBF2"));
+		savedPanel.setLayout(new GridLayout(0,2));
+		share.setLayout(new BoxLayout(share, BoxLayout.X_AXIS));
+		share.add(sharedPanel);
+		sharedPanel.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		JRadioButton citiesButton = new JRadioButton("Cities");
 		citiesButton.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
@@ -164,7 +139,7 @@ public class Menu extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		btnSearch.setBackground(Color.WHITE);
+		//btnSearch.setBackground(Color.decode("#B2EBF2"));
 		btnSearch.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
 		//typeGroup.add(btnSearch);
 		search.add(btnSearch);

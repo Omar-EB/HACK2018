@@ -103,6 +103,7 @@ public class Login extends JFrame {
 		lblNewLabel_7.setAlignmentX(CENTER_ALIGNMENT);
 		
 		txtNameBox = new JTextField();
+		txtNameBox.setMaximumSize(new Dimension(250, 25));
 		txtNameBox.setHorizontalAlignment(SwingConstants.CENTER);
 		txtNameBox.setText("HERE!");
 		txtNameBox.setPreferredSize(new Dimension(50, 50)) ; 
@@ -110,6 +111,7 @@ public class Login extends JFrame {
 		txtNameBox.setColumns(10);
 		
 		JButton btnLogin = new JButton("Login");
+		btnLogin.setMaximumSize(new Dimension(80, 35));
 		btnLogin.setAlignmentX(CENTER_ALIGNMENT);
 		btnLogin.setPreferredSize(new Dimension(700, 50));	
 		loginLayout.add(btnLogin);
