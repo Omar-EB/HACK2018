@@ -56,16 +56,16 @@ class Connection extends Thread {
 		} catch (UnknownHostException x){
 			x.getStackTrace();
 		}
-		while(true){
+		//while(true){
 			try {
 			String st = (String)in.readObject();
 			  System.out.println(st);
 				//}catch (EOFException e){System.out.println("EOF:"+e.getMessage());
-				} catch(IOException e) {System.out.println("readline:"+e.getMessage());
-				} catch(ClassNotFoundException e) {System.out.println("readline:"+e.getMessage());}
+				} catch(IOException e) {System.out.println("readline1:"+e.getMessage());
+				} catch(ClassNotFoundException e) {System.out.println("readline1:"+e.getMessage());}
 				//}catch (InterruptedException e){System.out.println("readline:"+e.getMessage());
 				//}
-		}
+		//}
 		/*finally {
 			try {
 			clientSocket.close();
