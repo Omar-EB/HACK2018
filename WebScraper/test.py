@@ -1,5 +1,6 @@
 
 import praw
+import sys
 
 reddit = praw.Reddit(client_id='ehpCFcRL2vQVOA',
                      client_secret='T98rCMYoiIS2DpEvf_EcaxYr_24',
@@ -34,8 +35,8 @@ def find_by_type(type):
     elif type=='cars':
         subreddit = reddit.subreddit('carporn')
     else :
-        subreddit = reddit.subreddit('lakeporn')
-    for submission in subreddit.hot(limit=5):
+        subreddit = reddit.subreddit('spaceporn')
+    for submission in subreddit.hot(limit=6):
         submissions.append(submission)
     return submissions
     end
@@ -44,8 +45,10 @@ def find_by_type(type):
     
 def main(type):
     submissions = find_by_type(type)
-    for submission in submissions:
-        print(submission.url)    
+    for x in range(1, len(submissions)):
+        print(submissions[x].url)    
 
 
 
+type = str(sys.argv)
+main(type)
