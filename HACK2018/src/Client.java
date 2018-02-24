@@ -1,13 +1,14 @@
 import java.net.*;
+import java.io.*;
 
+//-just to test
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.*;
+//-just to test
 
 public class Client implements ActionListener {
 	ObjectOutputStream out;
@@ -32,9 +33,9 @@ public class Client implements ActionListener {
 			jf.add(jp);
 			jb.addActionListener(this);
 			jf.setVisible(true);
-		} catch (UnknownHostException e){System.out.println("Socket:"+e.getMessage());
-		}catch (EOFException e){System.out.println("EOF:"+e.getMessage());
-		}catch (IOException e){System.out.println("readline IO:"+e.getMessage());
+		} catch (UnknownHostException e){System.out.println("Socket issue:"+e.getMessage());
+		}catch (EOFException e){System.out.println("File ended:"+e.getMessage());
+		}catch (IOException e){System.out.println("IO exception:"+e.getMessage());
 		}
 	}
 	public static void main (String args[]) {   
@@ -63,7 +64,8 @@ public class Client implements ActionListener {
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		}catch (EOFException e){System.out.println("End Of File:"+e.getMessage());
-		}catch (IOException e){System.out.println("readline IO:"+e.getMessage());}
+		}catch (EOFException e){System.out.println("File ended:"+e.getMessage());
+		}catch (IOException e){System.out.println("readline IO:"+e.getMessage());
+		}
 	}
 }

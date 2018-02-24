@@ -7,10 +7,14 @@ public class ClientMessage implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public enum ROUTE {REGISTER,SEARCH,SHARE,SAVE};
+	
+	
+	public enum ROUTE {REGISTER,LOGIN,SEARCH,SHARE,SAVE,TERMINATE};
 	private ROUTE route = null;
+	
 	private String destination=null;
 	private String source=null;
+	private String password=null;
 	private ArrayList<URL> list=null;
 	private String choice;
 	
@@ -26,6 +30,13 @@ public class ClientMessage implements Serializable {
 	}
 	public String getdestination() {
 		return destination;
+	}
+	
+	public void setPassWord(String password) {
+		this.password=password;
+	}
+	public String getPassWord() {
+		return password;
 	}
 	
 	public void setSource(String source) {

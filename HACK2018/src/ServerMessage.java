@@ -7,7 +7,7 @@ public class ServerMessage implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public enum ROUTE {LOGINACCEPT ,LOGIN_FAIL, SEARCH_RESULTS,SHARE_RESPONSE,SAVE_RESULTS};
+	public enum ROUTE {LOGIN_RESPONSE, SEARCH_RESULTS,SHARE_RESPONSE,SAVE_RESULTS};
 	private ROUTE route = null;
 	private String source=null;
 	private ArrayList<URL> list=null;
@@ -33,3 +33,4 @@ public class ServerMessage implements Serializable {
 		return list;
 	}
 }
+
