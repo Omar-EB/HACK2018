@@ -5,11 +5,14 @@ public class SQLTester{
 		try {
 			SQLManager.createDB();
 
-			SQLManager.addUser("Test1");
-			SQLManager.addUser("Test2");
+			SQLManager.addUser("Test1", "pass1");
+			SQLManager.addUser("Test2", "pass2");
 
 			SQLManager.addLink("Test1", "www.test.com");
 			SQLManager.addLink("Test1", "www.test2.com");
+			
+			SQLManager.shareLink("Test1","Test2", "www.test2.com");
+			SQLManager.sharedLink("Test2","www.test2.com",true);
 
 			SQLManager.addLink("Test2", "www.test3.com");
 

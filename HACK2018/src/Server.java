@@ -35,7 +35,6 @@ public class Server {
 	}
 }
 class Connection extends Thread {
-	boolean registered;
 	ObjectInputStream in;
 	ObjectOutputStream out;
 	Socket clientSocket;
@@ -63,6 +62,7 @@ class Connection extends Thread {
 					case REGISTER: 
 						name = clMessage.getSource();
 						String password = clMessage.getPassWord();
+						SQLManager.addUser(name,password);
 						break;
 						
 					case LOGIN:
