@@ -33,4 +33,3 @@ public class ServerMessage implements Serializable {
 		return list;
 	}
 }
-

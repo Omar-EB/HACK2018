@@ -13,7 +13,7 @@ import java.awt.event.ActionListener;
 public class Client implements ActionListener {
 	ObjectOutputStream out;
 	ObjectInputStream in;
-	Socket s = null;
+	Socket sock = null;
 	JFrame jf;
 	JButton jb;
 	JPanel jp;
@@ -21,9 +21,9 @@ public class Client implements ActionListener {
 		try{
 			int serverPort = 6432;
 			System.out.println("starting a new client socket");
-			s = new Socket(InetAddress.getByName(host), serverPort);
-			out =new ObjectOutputStream(s.getOutputStream());
-			in = new ObjectInputStream( s.getInputStream());
+			sock = new Socket(InetAddress.getByName(host), serverPort);
+			out =new ObjectOutputStream(sock.getOutputStream());
+			in = new ObjectInputStream( sock.getInputStream());
 			System.out.println("subscribing as: " + name);
 			jf = new JFrame(); 
 			jp= new JPanel();
@@ -33,14 +33,13 @@ public class Client implements ActionListener {
 			jf.add(jp);
 			jb.addActionListener(this);
 			jf.setVisible(true);
-		} catch (UnknownHostException e){System.out.println("Socket issue:"+e.getMessage());
+		}catch (UnknownHostException e){System.out.println("Socket issue:"+e.getMessage());
 		}catch (EOFException e){System.out.println("File ended:"+e.getMessage());
 		}catch (IOException e){System.out.println("IO exception:"+e.getMessage());
 		}
 	}
 	public static void main (String args[]) {   
-			Client c = new Client(args[1],args[0]);
-			c.runner();
+		new Client(args[1],args[0]).start();
 	}
 	public void actionPerformed(ActionEvent e) {
 		try {
@@ -51,7 +50,7 @@ public class Client implements ActionListener {
 		}
 	}
 	
-	public void runner() {
+	public void start() {
 		try {
 			while(true) {
 				Object sm = in.readObject();
@@ -62,10 +61,12 @@ public class Client implements ActionListener {
 					}
 				}
 			}
-		} catch (ClassNotFoundException e) {
+		}catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		}catch (EOFException e){System.out.println("File ended:"+e.getMessage());
-		}catch (IOException e){System.out.println("readline IO:"+e.getMessage());
+		}catch (EOFException e){
+			System.out.println("File ended:"+e.getMessage());
+		}catch (IOException e){
+			System.out.println("readline IO:"+e.getMessage());
 		}
 	}
 }

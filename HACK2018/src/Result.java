@@ -78,15 +78,15 @@ public class Result extends JFrame {
 		contentPane.setBorder(new EmptyBorder(25, 25, 25, 25));
 	
 		setContentPane(contentPane);
-		
-		ImageIcon pic1 = new ImageIcon("G:\\UOTTAWAHACK\\HACK2018\\HACK2018\\src\\TEST.jpg");
+		//"G:\\UOTTAWAHACK\\HACK2018\\HACK2018\\src\\TEST.jpg"
+		ImageIcon pic1 = new ImageIcon("TEST.jpg");
 		Image pic1_img = getScaledImage(pic1.getImage(), pic1.getIconWidth()/2, pic1.getIconHeight()/2);
 		pic1 = new ImageIcon(pic1_img);
 		JLabel lblPicture = new JLabel(pic1);
 		JRadioButton button1 = new JRadioButton();
 		
-		
-		ImageIcon pic2 = new ImageIcon("G:\\UOTTAWAHACK\\HACK2018\\HACK2018\\src\\testerr.jpg");
+		//"G:\\UOTTAWAHACK\\HACK2018\\HACK2018\\src\\testerr.jpg"
+		ImageIcon pic2 = new ImageIcon("testerr.jpg");
 		Image pic2_img = getScaledImage(pic2.getImage(),  pic2.getIconWidth()/2, pic2.getIconHeight()/2);
 		pic2 = new ImageIcon(pic2_img);
 		JLabel morePicture = new JLabel(pic2);
