@@ -14,9 +14,9 @@ public class SQLManager{
 		try {
 			Connection connection = DriverManager.getConnection("jdbc:sqlite:data_base_folder\\uOttaHack.db");
 			Statement statement = connection.createStatement();
-			statement.executeUpdate("CREATE TABLE  utable (name VARCHAR(20) PRIMARY KEY, password VARCHAR(8) NOT NULL);");
-			statement.executeUpdate("CREATE TABLE  links (url VARCHAR(2000) NOT NULL, uid VARCHAR(20), FOREIGN KEY(uid) REFERENCES uTable(name));");
-			statement.executeUpdate("CREATE TABLE shared (FOREIGN KEY(source) REFERENCES uTable(name), FOREIGN KEY(destination) REFERENCES uTable(name), url VARCHAR(2000));");
+			statement.executeUpdate("CREATE TABLE utable (name VARCHAR(20) PRIMARY KEY, password VARCHAR(8) NOT NULL);");
+			statement.executeUpdate("CREATE TABLE links (url VARCHAR(2000) NOT NULL, uid VARCHAR(20), FOREIGN KEY(uid) REFERENCES uTable(name));");
+			statement.executeUpdate("CREATE TABLE shared (source VARCHAR(20) REFERENCES uTable(name) NOT NULL, destination VARCHAR(20) REFERENCES uTable(name) NOT NULL, url VARCHAR(2000) NOT NULL);");
 			connection.close();
 		} catch (SQLException e){}
 	}
