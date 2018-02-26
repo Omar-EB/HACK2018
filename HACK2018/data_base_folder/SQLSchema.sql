@@ -9,6 +9,12 @@ CREATE TABLE links(
 	UID VARCHAR(20) REFERENCES uTable(name) NOT NULL
 );
 
+CREATE TABLE shared(
+	source VARCHAR(20) REFERENCES uTable(name) NOT NULL,
+	destination VARCHAR(20) REFERENCES uTable(name) NOT NULL,
+	URL VARCHAR(2000) NOT NULL
+)
+
 
 -- QUERIES
 
