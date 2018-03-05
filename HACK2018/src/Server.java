@@ -62,6 +62,8 @@ class Connection extends Thread {
 		}
 	}
 	
+	
+	@SuppressWarnings("unchecked")
 	public void run(){
 		System.out.println("server thread started");
 		while(true) {
@@ -101,7 +103,7 @@ class Connection extends Thread {
 						ArrayList<String> users_login = users_passwords[0];
 						ArrayList<String> passwords = users_passwords[1];
 						boolean found=false;
-						for (int i=0; i<users_Login.size();i++){
+						for (int i=0; i<users_login.size();i++){
 							if(users_login.get(i).equals(name_login)){
 								found = true;
 								if(passwords.get(i).equals(password)){
@@ -113,11 +115,11 @@ class Connection extends Thread {
 									this.name=name_login;
 									
 									sMessage = new ServerMessage(ServerMessage.ROUTE.SAVED_LINKS);
-									sMessage.setList(SQLManager.findSavedLinks(name));
+									sMessage.setList(SQLManager.findSavedLinks(name_login));
 									out.writeObject(sMessage);
 									
 									sMessage = new ServerMessage(ServerMessage.ROUTE.SHARED_LINKS);
-									ArrayList<?>[] shared_links = SQLManager.findSharedLinks(name);
+									ArrayList<?>[] shared_links = SQLManager.findSharedLinks(name_login);
 									ArrayList<URL> urlList = (ArrayList<URL>) shared_links[0];
 									ArrayList<String> srcList = (ArrayList<String>) shared_links[1];
 									
@@ -125,12 +127,12 @@ class Connection extends Thread {
 									//sort lists -- used insertion sort
 									String temp_usr=null;
 									URL temp_url=null;
-									for (int i = 1; i <srcList.size(); i++) {
-										temp_usr= srcList.get(i);
-										temp_url= urlList.get(i):
+									for (int k = 1; k <srcList.size(); k++) {
+										temp_usr= srcList.get(k);
+										temp_url= urlList.get(k);
 										
 										int j;
-										for (j= i-1; j>=0 && (temp_usr.compareTo(srcList.get(j))<0); j--)  {
+										for (j= k-1; j>=0 && (temp_usr.compareTo(srcList.get(j))<0); j--)  {
 											//data[j+1]= data[j];
 											srcList.set(j+1,srcList.get(j));
 											urlList.set(j+1,urlList.get(j));
@@ -156,8 +158,8 @@ class Connection extends Thread {
 											
 											
 											//reassign values
-											usr=srcList.get(traverse);
-											current = new ArrayList<URL>;
+											sender=srcList.get(traverse);
+											current = new ArrayList<URL>();
 										} else {
 											current.add(urlList.get(traverse));
 										}
@@ -211,17 +213,17 @@ class Connection extends Thread {
 							
 							ArrayList<String> users_share = (SQLManager.getUsernames())[0];
 							if(!users_share.contains(destination)){
-								ServerMessage sm = new ServerMessage(ServerMessage.ROUTE.SHARE_RESULTS);
+								ServerMessage sMessage = new ServerMessage(ServerMessage.ROUTE.SHARE_RESULTS);
 								String [] message = {"Error","user not found"};
 								sMessage.setMessage(message);
-								out.writeObject(sm);
+								out.writeObject(sMessage);
 								break;
 							}
 							if(destination.equals(this.name)){
-								ServerMessage sm = new ServerMessage(ServerMessage.ROUTE.SHARE_RESULTS);
+								ServerMessage sMessage = new ServerMessage(ServerMessage.ROUTE.SHARE_RESULTS);
 								String [] message = {"Error","cannot share to self"};
 								sMessage.setMessage(message);
-								out.writeObject(sm);
+								out.writeObject(sMessage);
 								break;
 							}
 							

@@ -25,10 +25,10 @@ public class ClientMessage implements Serializable {
 		return route;
 	}
 	
-	public void setdestination(String destination) {
+	public void setDestination(String destination) {
 		this.destination=destination;
 	}
-	public String getdestination() {
+	public String getDestination() {
 		return destination;
 	}
 	

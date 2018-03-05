@@ -107,10 +107,11 @@ public class SQLManager{
 		} catch (SQLException e){
 			e.printStackTrace();
 			System.out.println("CHILL WITH THAT");
-			return new ArrayList();
+			return null;
 		} catch (MalformedURLException e){
 			e.printStackTrace();
 			System.out.println("wow there");
+			return null;
 		}
 	}
 	
@@ -143,6 +144,7 @@ public class SQLManager{
 		} catch (MalformedURLException e){
 			e.printStackTrace();
 			System.out.println("wow there");
+			return null;
 		}
 	}
 
