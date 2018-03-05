@@ -7,16 +7,24 @@ public class ServerMessage implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public enum ROUTE {LOGIN_RESPONSE, SEARCH_RESULTS,SHARE_RESPONSE,SAVE_RESULTS};
+	public enum ROUTE {AUTHENTICATION_RESPONSE, SEARCH_RESULTS,SHARE_RESPONSE,SHARED_LINKS,SAVED_LINKS,SHARE_RESULT,SAVE_RESULTS};
 	private ROUTE route = null;
 	private String source=null;
 	private ArrayList<URL> list=null;
+	String[] message=null;
 	
 	public ServerMessage(ROUTE route) {
 		this.route = route;
 	}
 	public ROUTE getType() {
 		return route;
+	}
+	
+	public void setMessage(String[] message){
+		this.message=message;
+	}
+	public String getMessage(){
+		return message;
 	}
 	
 	public void setSource(String source) {

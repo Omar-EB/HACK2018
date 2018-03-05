@@ -30,17 +30,22 @@ public class SQLManager{
 		} catch (SQLException e){}
 	}
 	
-	public static ArrayList<String> getUsernames(){
+	public static ArrayList<String> [] getUsernames(){
 		try {
 			Connection connection = DriverManager.getConnection("jdbc:sqlite:data_base_folder\\uOttaHack.db");
 			Statement statement = connection.createStatement();
-			ResultSet rs = statement.executeQuery("SELECT name FROM utable;");
-			ArrayList<String> lst = new ArrayList<String>();
+			ResultSet rs = statement.executeQuery("SELECT * FROM utable;");
+			ArrayList<String> usrLst = new ArrayList<String>();
+			ArrayList<String> passLst = new ArrayList<String>();
 			while(rs.next()){
-				lst.add(rs.getString("name"));
+				usrLst.add(rs.getString("name"));
+				passLst.add(rs.getString("password"));
 			}
+			ArrayList<String> [] ret = (ArrayList<String> []) new Object[2];
+			ret[0]=usrLst;
+			ret[1]=passLst;
 			connection.close();
-			return lst;
+			return ret;
 		} catch (SQLException e){
 			System.out.println("sql went crazy >.>");
 			return null;
@@ -58,12 +63,12 @@ public class SQLManager{
 		} catch (SQLException e) {}
 	}
 	
-	public static void shareLink(String source,String destination,String URL){
+	public static void shareLink(String source,String destination,URL url){
 		try {
 			Connection connection = DriverManager.getConnection("jdbc:sqlite:data_base_folder\\uOttaHack.db");
 
 			Statement statement = connection.createStatement();
-			statement.executeUpdate("INSERT INTO shared(source,destination,url) VALUES ('"+source+"','"+destination+"','"+URL+"');");
+			statement.executeUpdate("INSERT INTO shared(source,destination,url) VALUES ('"+source+"','"+destination+"','"+url.toString()+"');");
 			
 			connection.close();
 		} catch (SQLException e){}
@@ -83,7 +88,7 @@ public class SQLManager{
 	}
 
 	@SuppressWarnings("unchecked")
-	public static ArrayList<String> findSavedLinks(String name){
+	public static ArrayList<URL> findSavedLinks(String name){
 		try {
 			Connection connection = DriverManager.getConnection("jdbc:sqlite:data_base_folder\\uOttaHack.db");
 			
@@ -92,10 +97,10 @@ public class SQLManager{
 			System.out.println(name);
 			
 
-			ArrayList<String> lst = new ArrayList<String>();
+			ArrayList<URL> lst = new ArrayList<URL>();
 			
 			while(result.next()){
-				lst.add(result.getString(1));
+				lst.add(new URL(result.getString(1)));
 			}
 			connection.close();
 			return lst;
@@ -103,14 +108,14 @@ public class SQLManager{
 			e.printStackTrace();
 			System.out.println("CHILL WITH THAT");
 			return new ArrayList();
-		} //catch (MalformedURLException e){
-			//e.printStackTrace();
-			//System.out.println("wow there");
-		//}
+		} catch (MalformedURLException e){
+			e.printStackTrace();
+			System.out.println("wow there");
+		}
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static ArrayList<String> [] findSharedLinks(String destination){
+	public static ArrayList<?> [] findSharedLinks(String destination){
 		//returned array : url's at 0 , sources at 1
 		try {
 			Connection connection = DriverManager.getConnection("jdbc:sqlite:data_base_folder\\uOttaHack.db");
@@ -120,11 +125,11 @@ public class SQLManager{
 			System.out.println(destination);
 			
 
-			ArrayList<String> urlLst = new ArrayList<String>();
+			ArrayList<URL> urlLst = new ArrayList<URL>();
 			ArrayList<String> srcLst = new ArrayList<String>();
-			ArrayList<String>[] ret= (ArrayList<String>[]) new Object[2];
+			ArrayList<?>[] ret= (ArrayList<?>[]) new Object[2];
 			while(result.next()){
-				urlLst.add(result.getString("url"));
+				urlLst.add(new URL(result.getString("url")));
 				srcLst.add(result.getString("source"));
 			}
 			connection.close();
@@ -135,10 +140,10 @@ public class SQLManager{
 			e.printStackTrace();
 			System.out.println("CHILL WITH THAT");
 			return null;
-		} //catch (MalformedURLException e){
-			//e.printStackTrace();
-			//System.out.println("wow there");
-		//}
+		} catch (MalformedURLException e){
+			e.printStackTrace();
+			System.out.println("wow there");
+		}
 	}
 
 	public static void deleteSavedLink(String name, String URL){
