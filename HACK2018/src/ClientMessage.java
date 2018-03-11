@@ -12,7 +12,7 @@ public class ClientMessage implements Serializable {
 	public enum ROUTE {REGISTER,LOGIN,SEARCH,SHARE,SAVE,TERMINATE};
 	private ROUTE route = null;
 	
-	private String destination=null;
+	private ArrayList<String> destination=null;
 	private String source=null;
 	private String password=null;
 	private ArrayList<URL> list=null;
@@ -26,9 +26,17 @@ public class ClientMessage implements Serializable {
 	}
 	
 	public void setDestination(String destination) {
+		(this.destination=new ArrayList<String>()).set(0,destination);
+	}
+	public void setDestination(ArrayList<String> destination) {
 		this.destination=destination;
 	}
+	
+	
 	public String getDestination() {
+		return destination.get(0);
+	}
+	public ArrayList<String> getDestinationList() {
 		return destination;
 	}
 	
@@ -42,9 +50,11 @@ public class ClientMessage implements Serializable {
 	public void setSource(String source) {
 		this.source=source;
 	}
+	
 	public String getSource() {
 		return source;
 	}
+	
 	
 	public void setList(ArrayList<URL> list) {
 		this.list=list;

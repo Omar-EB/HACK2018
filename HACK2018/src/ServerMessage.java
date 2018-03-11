@@ -7,10 +7,10 @@ public class ServerMessage implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public enum ROUTE {AUTHENTICATION_RESPONSE, SEARCH_RESULTS,SHARE_RESPONSE,SHARED_LINKS,SAVED_LINKS,SHARE_RESULTS,SAVE_RESULTS};
+	public enum ROUTE {AUTHENTICATION_RESPONSE, SEARCH_RESULTS,SHARE_RESPONSE,SHARED_LINKS,SAVED_LINKS,SAVE_RESULTS};
 	private ROUTE route = null;
-	private String source=null;
-	private ArrayList<URL> list=null;
+	private ArrayList<String> user_list=null;
+	private ArrayList<URL> url_list=null;
 	String[] message=null;
 	
 	public ServerMessage(ROUTE route) {
@@ -27,17 +27,26 @@ public class ServerMessage implements Serializable {
 		return message;
 	}
 	
-	public void setSource(String source) {
-		this.source=source;
+	public void setUser(String user) {
+		(this.user_list=new ArrayList<String>()).set(0,user);
 	}
-	public String getSource() {
-		return source;
+	
+	public void setUser(ArrayList<String> users) {
+		this.user_list=users;
+	}
+	
+	public String getUser() {
+		return user_list.get(0);
+	}
+	
+	public ArrayList<String> getUserList() {
+		return user_list;
 	}
 	
 	public void setList(ArrayList<URL> list) {
-		this.list=list;
+		this.url_list=list;
 	}
 	public ArrayList<URL> getList() {
-		return list;
+		return url_list;
 	}
 }

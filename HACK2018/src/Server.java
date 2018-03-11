@@ -70,13 +70,12 @@ class Connection extends Thread {
 			try {
 				ClientMessage clMessage = (ClientMessage) in.readObject();
 				switch(clMessage.getType()) {
-					case REGISTER: 
+					case REGISTER:{ 
 						String name = clMessage.getSource();
 						String password = clMessage.getPassWord();
-						//ArrayList<String>[] users_passwords = SQLManager.getUserNames();
-						ArrayList<String> users_register = (SQLManager.getUsernames())[0];
+						ArrayList<String> users = (SQLManager.getUsernames())[0];
 						boolean taken=false;
-						for(String user : users_register){
+						for(String user : users){
 							if(name.equals(user)){
 								ServerMessage sMessage = new ServerMessage(ServerMessage.ROUTE.AUTHENTICATION_RESPONSE);
 								String [] message = {"Error","User Name: "+name+" is taken"};
@@ -95,16 +94,17 @@ class Connection extends Thread {
 							SQLManager.addUser(name,password);
 						}
 						break;
+					}
 						
-					case LOGIN:
-						String name_login = clMessage.getSource();
-						password = clMessage.getPassWord();
+					case LOGIN:{
+						String name = clMessage.getSource();
+						String password = clMessage.getPassWord();
 						ArrayList<String>[] users_passwords = SQLManager.getUsernames();
-						ArrayList<String> users_login = users_passwords[0];
+						ArrayList<String> users = users_passwords[0];
 						ArrayList<String> passwords = users_passwords[1];
 						boolean found=false;
-						for (int i=0; i<users_login.size();i++){
-							if(users_login.get(i).equals(name_login)){
+						for (int i=0; i<users.size();i++){
+							if(users.get(i).equals(name)){
 								found = true;
 								if(passwords.get(i).equals(password)){
 									ServerMessage sMessage = new ServerMessage(ServerMessage.ROUTE.AUTHENTICATION_RESPONSE);
@@ -112,62 +112,17 @@ class Connection extends Thread {
 									sMessage.setMessage(message);
 									out.writeObject(sMessage);
 									verified=true;
-									this.name=name_login;
+									this.name=name;
 									
 									sMessage = new ServerMessage(ServerMessage.ROUTE.SAVED_LINKS);
-									sMessage.setList(SQLManager.findSavedLinks(name_login));
+									sMessage.setList(SQLManager.findSavedLinks(name));
 									out.writeObject(sMessage);
 									
 									sMessage = new ServerMessage(ServerMessage.ROUTE.SHARED_LINKS);
-									ArrayList<?>[] shared_links = SQLManager.findSharedLinks(name_login);
-									ArrayList<URL> urlList = (ArrayList<URL>) shared_links[0];
-									ArrayList<String> srcList = (ArrayList<String>) shared_links[1];
-									
-									
-									//sort lists -- used insertion sort
-									String temp_usr=null;
-									URL temp_url=null;
-									for (int k = 1; k <srcList.size(); k++) {
-										temp_usr= srcList.get(k);
-										temp_url= urlList.get(k);
-										
-										int j;
-										for (j= k-1; j>=0 && (temp_usr.compareTo(srcList.get(j))<0); j--)  {
-											//data[j+1]= data[j];
-											srcList.set(j+1,srcList.get(j));
-											urlList.set(j+1,urlList.get(j));
-										}
-										//data[j+1]= temp;
-										srcList.set(j+1,temp_usr);
-										urlList.set(j+1,temp_url);
-									}
-									
-									
-									
-									
-									int traverse = 0;
-									String sender=srcList.get(0);
-									ArrayList<URL> current =new ArrayList<URL>();
-									while(traverse<srcList.size()){
-										if(srcList.get(traverse).compareTo(sender)!=0){
-											//write message
-											sMessage = new ServerMessage(ServerMessage.ROUTE.SHARED_LINKS);
-											sMessage.setList(current);
-											sMessage.setSource(sender);
-											out.writeObject(sMessage);
-											
-											
-											//reassign values
-											sender=srcList.get(traverse);
-											current = new ArrayList<URL>();
-										} else {
-											current.add(urlList.get(traverse));
-										}
-										traverse++;
-									}
-									
-									//sMessage.setList(SQLManager.findSharedLinks(name));
-									//out.writeObject(sMessage);
+									ArrayList<?>[] shared_links = SQLManager.findSharedLinks(name);
+									sMessage.setList((ArrayList<URL>) shared_links[0]);
+									sMessage.setUser((ArrayList<String>) shared_links[1]);
+									out.writeObject(sMessage);
 								} else {
 									ServerMessage sMessage = new ServerMessage(ServerMessage.ROUTE.AUTHENTICATION_RESPONSE);
 									String [] message = {"Error","Incorrect password"};
@@ -177,6 +132,7 @@ class Connection extends Thread {
 								break;
 							}
 						}
+					
 						
 						if(!found){
 							ServerMessage sMessage = new ServerMessage(ServerMessage.ROUTE.AUTHENTICATION_RESPONSE);
@@ -185,8 +141,9 @@ class Connection extends Thread {
 							out.writeObject(sMessage);
 						}
 						break;
+					}
 						
-					case SEARCH: 
+					case SEARCH:{ 
 						if(verified){
 							try{
 								//Process p = Runtime.getRuntime().exec("python "+directory+"\\WebScraper\\test.py "+cm.getChoice());
@@ -198,51 +155,56 @@ class Connection extends Thread {
 									System.out.println(line);
 									URLS.add(new URL(line));
 								}
-								ServerMessage sm = new ServerMessage(ServerMessage.ROUTE.SEARCH_RESULTS);
-								sm.setList(URLS);
-								out.writeObject(sm);
+								ServerMessage sMessage = new ServerMessage(ServerMessage.ROUTE.SEARCH_RESULTS);
+								sMessage.setList(URLS);
+								out.writeObject(sMessage);
 							} catch (IOException ioxptn){
 								ioxptn.printStackTrace();
 							}
 						}
 						break;
+					}
 						
-					case SHARE:
+					case SHARE:{
 						if(verified){
-							String destination = clMessage.getDestination();
+							for (String destination :  clMessage.getDestinationList() ) {
+								ServerMessage sMessage = new ServerMessage(ServerMessage.ROUTE.SHARED_LINKS);
+								for(Connection connect : all_connections){
+									if (connect.name.equals(destination)){ // !!to be completed!!
+										
+									}
+								}
+								out.writeObject(sMessage);
+							}
 							
-							ArrayList<String> users_share = (SQLManager.getUsernames())[0];
-							if(!users_share.contains(destination)){
+							/*
+							if(!users.contains(destination)){
 								ServerMessage sMessage = new ServerMessage(ServerMessage.ROUTE.SHARE_RESULTS);
 								String [] message = {"Error","user not found"};
 								sMessage.setMessage(message);
 								out.writeObject(sMessage);
 								break;
-							}
+							} 
 							if(destination.equals(this.name)){
 								ServerMessage sMessage = new ServerMessage(ServerMessage.ROUTE.SHARE_RESULTS);
 								String [] message = {"Error","cannot share to self"};
 								sMessage.setMessage(message);
 								out.writeObject(sMessage);
 								break;
-							}
-							
-							ArrayList<URL> urls = clMessage.getList();
-							
-							for (URL url : urls){ // !!to be completed!!
-								SQLManager.shareLink(this.name,destination,url);
-							}
+							} */
 							
 						}
 						break; 
+					}
 						
-					case SAVE:
+					case SAVE:{
 						if(verified){
 							
 						}
 						break;
+					}
 						
-					case TERMINATE:
+					case TERMINATE:{
 						clientSocket.close();
 						for (int i=0; i< all_connections.size(); i++) {
 							if (this == (Connection) all_connections.get(i)) {
@@ -252,6 +214,7 @@ class Connection extends Thread {
 							}
 						} 
 						break;
+					}
 				}
 			} catch (EOFException e){
 				System.out.println("File Ended:"+e.getMessage());
