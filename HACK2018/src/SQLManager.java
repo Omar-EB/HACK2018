@@ -75,7 +75,7 @@ public class SQLManager{
 	}
 	public static void sharedLink(String destination,URL url,boolean choice){
 		if(choice){
-			addLink(destination, URL);
+			addLink(destination, url);
 		}
 		try {
 			Connection connection = DriverManager.getConnection("jdbc:sqlite:data_base_folder\\uOttaHack.db");

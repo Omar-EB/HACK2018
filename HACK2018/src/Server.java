@@ -40,8 +40,8 @@ class Connection extends Thread {
 	Socket clientSocket;
 	String name="temp";
 	
-	//static int global_ID;
-	//int conn_ID;
+	static int global_ID;
+	int conn_ID;
 	
 	boolean verified;
 	List <Connection> all_connections;
@@ -134,7 +134,7 @@ class Connection extends Thread {
 										out.writeObject(sMessage);
 										
 										sMessage = new ServerMessage(ServerMessage.ROUTE.USERS);
-										sMessage.setUser(SQLManager.getUsernames());
+										sMessage.setUser(SQLManager.getUsernames()[0]);
 										out.writeObject(sMessage);
 									} else {
 										ServerMessage sMessage = new ServerMessage(ServerMessage.ROUTE.AUTHENTICATION_RESPONSE);
@@ -215,7 +215,6 @@ class Connection extends Thread {
 								for (URL link : clMessage.getList() ){
 									SQLManager.sharedLink(name,link,false);
 								}
-								SQLManager.sharedLink(name,);
 							}
 							break;
 						}
