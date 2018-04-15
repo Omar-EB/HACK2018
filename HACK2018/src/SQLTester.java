@@ -9,13 +9,13 @@ public class SQLTester{
 			SQLManager.addUser("Test1", "pass1");
 			SQLManager.addUser("Test2", "pass2");
 
-			SQLManager.addLink("Test1", "www.test.com");
-			SQLManager.addLink("Test1", "www.test2.com");
+			SQLManager.addLink("Test1", "https://"+"//www.test.com");
+			SQLManager.addLink("Test1", "https://"+"//www.test2.com");
 			
-			SQLManager.shareLink("Test1","Test2", new URL("www.test2.com"));
-			SQLManager.sharedLink("Test2","www.test2.com",true);
+			SQLManager.shareLink("Test1","Test2", new URL("https://"+"//www.test2.com"));
+			SQLManager.sharedLink("Test2","https://"+"//www.test2.com",true);
 
-			SQLManager.addLink("Test2", "www.test3.com");
+			SQLManager.addLink("Test2", "https://"+"//www.test3.com");
 
 
 			ArrayList<URL> results = SQLManager.findSavedLinks("Test1");

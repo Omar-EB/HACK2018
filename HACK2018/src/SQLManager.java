@@ -52,12 +52,12 @@ public class SQLManager{
 		}
 	}
 
-	public static void addLink(String name, String URL){
+	public static void addLink(String name, URL url){
 		try {
 			Connection connection = DriverManager.getConnection("jdbc:sqlite:data_base_folder\\uOttaHack.db");
 			
 			Statement statement = connection.createStatement();
-			statement.executeUpdate("INSERT INTO links(url, uid) VALUES ('" + URL + "', '" + name + "');");
+			statement.executeUpdate("INSERT INTO links(url, uid) VALUES ('" + url + "', '" + name + "');");
 
 			connection.close();
 		} catch (SQLException e) {}
@@ -68,12 +68,12 @@ public class SQLManager{
 			Connection connection = DriverManager.getConnection("jdbc:sqlite:data_base_folder\\uOttaHack.db");
 
 			Statement statement = connection.createStatement();
-			statement.executeUpdate("INSERT INTO shared(source,destination,url) VALUES ('"+source+"','"+destination+"','"+url.toString()+"');");
+			statement.executeUpdate("INSERT INTO shared(source,destination,url) VALUES ('" + source + "','" + destination + "','" + url + "');");
 			
 			connection.close();
 		} catch (SQLException e){}
 	}
-	public static void sharedLink(String destination,String URL,boolean choice){
+	public static void sharedLink(String destination,URL url,boolean choice){
 		if(choice){
 			addLink(destination, URL);
 		}
@@ -81,7 +81,7 @@ public class SQLManager{
 			Connection connection = DriverManager.getConnection("jdbc:sqlite:data_base_folder\\uOttaHack.db");
 
 			Statement statement = connection.createStatement();
-			statement.executeUpdate("DELETE FROM shared WHERE (destination='" + destination + "' AND url='" + URL + "');");
+			statement.executeUpdate("DELETE FROM shared WHERE (destination='" + destination + "' AND url='" + url + "');");
 			
 			connection.close();
 		} catch (SQLException e){}

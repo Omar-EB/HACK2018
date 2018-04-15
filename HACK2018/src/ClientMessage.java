@@ -9,7 +9,7 @@ public class ClientMessage implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	
-	public enum ROUTE {REGISTER,LOGIN,SEARCH,SHARE,SAVE,TERMINATE};
+	public enum ROUTE {REGISTER, LOGIN, SEARCH, SHARE, SAVE, DELETE, TERMINATE};
 	private ROUTE route = null;
 	
 	private ArrayList<String> destination=null;

@@ -7,7 +7,7 @@ public class ServerMessage implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	public enum ROUTE {AUTHENTICATION_RESPONSE, SEARCH_RESULTS,SHARE_RESPONSE,SHARED_LINKS,SAVED_LINKS,SAVE_RESULTS};
+	public enum ROUTE {AUTHENTICATION_RESPONSE, SEARCH_RESULTS, SHARE_RESPONSE, SHARED_LINKS, SAVED_LINKS, SAVE_RESULTS, USERS, NEW_USER};
 	private ROUTE route = null;
 	private ArrayList<String> user_list=null;
 	private ArrayList<URL> url_list=null;
